@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do Life Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Storage error banner (persistent, shown on localStorage failure) -->
+    <div
+      id="storage-error-banner"
+      role="alert"
+      aria-live="assertive"
+      hidden
+    ></div>
+
+    <!-- Theme toggle (fixed position, always visible) -->
+    <button id="theme-toggle" aria-label="Toggle dark/light theme">🌙</button>
+
+    <main class="dashboard">
+      <!-- ── Greeting Widget ───────────────────────────────────────── -->
+      <section class="widget widget--greeting" aria-labelledby="greeting-heading">
+        <h2 id="greeting-heading" class="sr-only">Greeting</h2>
+
+        <div class="greeting__time-row">
+          <span id="clock" aria-label="Current time">00:00:00</span>
+          <span id="date" aria-label="Current date"></span>
+        </div>
+
+        <p id="greeting-text" aria-live="polite"></p>
+
+        <div class="greeting__name-row">
+          <label for="name-input" class="sr-only">Your name</label>
+          <input
+            type="text"
+            id="name-input"
+            maxlength="50"
+            placeholder="Enter your name…"
+            autocomplete="off"
+          />
+          <button id="name-save-btn" type="button">Save</button>
+        </div>
+
+        <p
+          id="greeting-error"
+          class="error-msg"
+          role="alert"
+          aria-live="polite"
+          hidden
+        ></p>
+      </section>
+
+      <!-- ── Middle row: Focus Timer + Quick Links ─────────────────── -->
+      <div class="dashboard__mid-row">
+        <!-- Focus Timer -->
+        <section class="widget widget--timer" aria-labelledby="timer-heading">
+          <h2 id="timer-heading">Focus Timer</h2>
+
+          <div
+            id="timer-display"
+            class="timer__display"
+            aria-label="Timer countdown"
+            aria-live="off"
+          >
+            25:00
+          </div>
+
+          <p
+            id="timer-complete-msg"
+            class="timer__complete-msg"
+            role="alert"
+            aria-live="assertive"
+            hidden
+          >
+            ✅ Session complete!
+          </p>
+
+          <div class="timer__controls" role="group" aria-label="Timer controls">
+            <button id="timer-start" type="button">Start</button>
+            <button id="timer-stop" type="button" disabled>Stop</button>
+            <button id="timer-reset" type="button" disabled>Reset</button>
+          </div>
+
+          <div class="timer__duration-row">
+            <label for="timer-duration-input">Duration (min)</label>
+            <input
+              type="number"
+              id="timer-duration-input"
+              min="1"
+              max="120"
+              value="25"
+              aria-describedby="timer-error"
+            />
+            <button id="timer-duration-save" type="button">Save</button>
+          </div>
+
+          <p
+            id="timer-error"
+            class="error-msg"
+            role="alert"
+            aria-live="polite"
+            hidden
+          ></p>
+        </section>
+
+        <!-- Quick Links / Link Launcher -->
+        <section class="widget widget--links" aria-labelledby="links-heading">
+          <h2 id="links-heading">Quick Links</h2>
+
+          <div class="links__add-row">
+            <label for="link-label-input" class="sr-only">Link label</label>
+            <input
+              type="text"
+              id="link-label-input"
+              maxlength="50"
+              placeholder="Label"
+              autocomplete="off"
+            />
+
+            <label for="link-url-input" class="sr-only">Link URL</label>
+            <input
+              type="url"
+              id="link-url-input"
+              maxlength="2048"
+              placeholder="https://example.com"
+              autocomplete="off"
+            />
+
+            <button id="link-add-btn" type="button">Add Link</button>
+          </div>
+
+          <p
+            id="link-error"
+            class="error-msg"
+            role="alert"
+            aria-live="polite"
+            hidden
+          ></p>
+
+          <div id="link-list" role="list" aria-label="Quick links"></div>
+
+          <p id="link-empty-msg" class="empty-msg" aria-live="polite">
+            No quick links yet. Add one above!
+          </p>
+        </section>
+      </div>
+      <!-- /.dashboard__mid-row -->
+
+      <!-- ── Task Manager ───────────────────────────────────────────── -->
+      <section class="widget widget--tasks" aria-labelledby="tasks-heading">
+        <h2 id="tasks-heading">Task Manager</h2>
+
+        <div class="tasks__add-row">
+          <label for="task-input" class="sr-only">New task description</label>
+          <input
+            type="text"
+            id="task-input"
+            maxlength="255"
+            placeholder="What needs to be done?"
+            autocomplete="off"
+          />
+          <button id="task-add-btn" type="button">Add</button>
+        </div>
+
+        <div class="tasks__sort-row">
+          <label for="task-sort-select">Sort:</label>
+          <select id="task-sort-select" aria-label="Sort tasks">
+            <option value="default">Default</option>
+            <option value="alpha">A–Z</option>
+            <option value="completedLast">Completed Last</option>
+          </select>
+        </div>
+
+        <p
+          id="task-error"
+          class="error-msg"
+          role="alert"
+          aria-live="polite"
+          hidden
+        ></p>
+
+        <ul id="task-list" aria-label="Task list" aria-live="polite"></ul>
+      </section>
+    </main>
+
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
